@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Graphics.h"
+#include "Keyboard.h"
 
 class triag
 {
 public:
 	void draw_triang(Graphics& gfx);
+	void Update(Keyboard& kbd);
 
 	static const int size = 15;
 	double x_in = 300;

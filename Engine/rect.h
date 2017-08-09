@@ -5,6 +5,11 @@
 class rect
 {
 public:
+
+	void rect::Update(Graphics & gfx);
+	void rect::RectExist(Graphics& gfx);
+
+
 	void draw_rect(Graphics& gfx);
 	
 	static const int size = 35;
@@ -20,5 +25,4 @@ public:
 	int speedcoef = 5;
 	bool touched = false;
 	
-
 };
