@@ -2,5 +2,4 @@
 #include "Graphics.h"
 // suroundings
 
-
-void Surroundings(Graphics& gfx); #pragma once
+void Surroundings(Graphics& gfx);

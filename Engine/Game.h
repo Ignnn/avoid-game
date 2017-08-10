@@ -61,4 +61,5 @@ private:
 	bool touch;
 	int array_s_ractang;
 	int array_s_triag;
+	bool start;
 };

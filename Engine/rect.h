@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Graphics.h"
-
+#include "triag.h"
 class rect
 {
 public:
 
-	void rect::Update(Graphics & gfx);
-	void rect::RectExist(Graphics& gfx);
-
+	void rect::Update();
+	void rect::RectExist();
+	void rect::Collision(triag& triang);
 
 	void draw_rect(Graphics& gfx);
 	

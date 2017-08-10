@@ -1,5 +1,6 @@
 
 #include "Surroundings.h"
+#include "Graphics.h"
 
 void Surroundings(Graphics& gfx)
 {

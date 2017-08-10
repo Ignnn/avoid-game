@@ -43,33 +43,33 @@ void rect::draw_rect(Graphics& gfx)
 
 }
 
-void rect::RectExist(Graphics& gfx)
+void rect::RectExist()
 {
-	std::random_device rd;
-	std::mt19937 rng(rd());
-	std::uniform_int_distribution<int> c1(50, 255);
-	std::uniform_int_distribution<int> c2(50, 255);
-	std::uniform_int_distribution<int> c3(50, 255);
+	if (!exist)
+	{
+
+		std::random_device rd;
+		std::mt19937 rng(rd());
+		std::uniform_int_distribution<int> c1(50, 255);
+		std::uniform_int_distribution<int> c2(50, 255);
+		std::uniform_int_distribution<int> c3(50, 255);
 
 
-	std::uniform_int_distribution<int> degree(50, 255);
+		std::uniform_int_distribution<int> degree(50, 255);
 
-	color[0] = c1(rng);
-	color[1] = c2(rng);
-	color[2] = c3(rng);
-	exist = true;
-	std::uniform_int_distribution<int> xDist(45, 745);
-	x_in = xDist(rng);
-	y_in = 20;
-	std::uniform_int_distribution<int> sp(2, 4);
-	speedcoef = sp(rng);
-
-
-
-
+		color[0] = c1(rng);
+		color[1] = c2(rng);
+		color[2] = c3(rng);
+		exist = true;
+		std::uniform_int_distribution<int> xDist(45, 745);
+		x_in = xDist(rng);
+		y_in = 20;
+		std::uniform_int_distribution<int> sp(2, 4);
+		speedcoef = sp(rng);
+	}
 }
 
-void rect::Update(Graphics & gfx)
+void rect::Update()
 {
 	if (exist)
 	{
@@ -87,13 +87,13 @@ void rect::Update(Graphics & gfx)
 
 
 
-/*void rect::Collision(const triag& triang)
+void rect::Collision(triag& triang)
 {
 
 int array_s_ractang;
 int array_s_triag;
-//int xt;
-//int yt;
+int xt;
+int yt;
 
 array_s_ractang = sizeof(area) / sizeof(*area);
 array_s_triag = sizeof(triang.area) / sizeof(*triang.area);
@@ -102,11 +102,9 @@ for (int jj = 0; jj < array_s_triag; jj++)
 {
 for (int jjj = 0; jjj < array_s_ractang; jjj++)
 {
-//xt = area[jjj][0] == triang.area[jj][0];
-//yt = area[jjj][1] == triang.area[jj][1];
-//triang.touched = triang.touched || (xt && yt);
+xt = area[jjj][0] == triang.area[jj][0];
+yt = area[jjj][1] == triang.area[jj][1];
+triang.touched = triang.touched || (xt && yt);
 }
 }
 }
-
-*/

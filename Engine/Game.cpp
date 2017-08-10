@@ -23,6 +23,7 @@
 #include "Graphics.h"
 #include <cmath>
 #include <random>
+#include "Surroundings.h"
 
 Game::Game(MainWindow& wnd)
 	:
@@ -46,23 +47,11 @@ Game::Game(MainWindow& wnd)
 		ractang[j].color[0] = c1(rng);
 		ractang[j].color[1] = c2(rng);
 		ractang[j].color[2] = c3(rng);
-		ii[j] = 0;
-
-
 		std::uniform_int_distribution<int> sp(2, 4);
 		ractang[j].speedcoef = sp(rng);
 
 	}
-
-	triang.y_in = 500- triang.size;
-	triang.x_in = 400 - (triang.size / 2);
-	triang.color[0] = 255;
-	triang.color[1] = 255;
-	triang.color[2] = 255;
-	array_s_ractang  = sizeof(ractang[0].area) / sizeof(*ractang[0].area);
-	array_s_triag = sizeof(triang.area) / sizeof(*triang.area);
-	touch = false;
-
+	start = false;
 }
 
 void Game::Go()
@@ -71,167 +60,48 @@ void Game::Go()
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
-
 }
 
 void Game::UpdateModel()
 {
 
+	if (start) {
+
+		for (int j = 0; j < n; j++)
+		{
+			ractang[j].RectExist();
+			ractang[j].Update();
+		}
+
+		if (!triang.touched)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				ractang[j].Collision(triang);
+			}
+			triang.Update(wnd.kbd);
+		}
+
+		// Atstatomas trikampis, jei paspaudžiama "R"
+		triang.Restart(wnd.kbd);
+	}
+
+	// Svarbu praleisti pirmąją iteraciją, nes pirmiausia turėtų būti nupiešiamos figūros (piešimo metu fiksuojamos pirmosios koordinatės),
+	start = true;
 }
 
 void Game::ComposeFrame()
 {
-	
-
 	for (int j = 0; j < n; j++)
 	{
-
-		if (ii[j] == 0)
-		{
-			ractang[j].draw_rect(gfx);
-		}
-
-
-		if (!ractang[j].exist)
-		{
-
-			std::random_device rd;
-			std::mt19937 rng(rd());
-			std::uniform_int_distribution<int> c1(50, 255);
-			std::uniform_int_distribution<int> c2(50, 255);
-			std::uniform_int_distribution<int> c3(50, 255);
-			
-		
-			std::uniform_int_distribution<int> degree(50, 255);
-
-			ractang[j].color[0] = c1(rng);
-			ractang[j].color[1] = c2(rng);
-			ractang[j].color[2] = c3(rng);
-			ractang[j].exist = true;
-			std::uniform_int_distribution<int> xDist(45, 745);
-			ractang[j].x_in = xDist(rng);
-			ractang[j].y_in = 20;
-			ractang[j].draw_rect(gfx);
-			std::uniform_int_distribution<int> sp(2, 4);
-			ractang[j].speedcoef = sp(rng);
-
-		}
-
-
-		if (ractang[j].exist)
-		{
-			ractang[j].y_in += ractang[j].speedcoef;
-			//ractang[j].y_in += 10;
-			ractang[j].angle += 0.01*ractang[j].speedcoef;
-
-			if (ractang[j].y_in > 530)
-			{
-				ractang[j].exist = false;
-			}
-		}
-
+		ractang[j].draw_rect(gfx);
 	}
 
 
-
-
-
-	// APLINKA
-
-	for (int i = 0; i < 800; ++i)
+	if (!triang.touched)
 	{
-		for (int j = 0; j < 50; j++)
-		{
-			gfx.PutPixel(i, j, 0, 0, 0);
-		}
-	}
-
-
-	for (int i=0; i < 800; ++i)
-	{
-		for (int j = 500; j < 600;j++)
-		{
-			gfx.PutPixel(i, j, 0, 0, 0);
-		}
-}
-
-
-	for (int i = 100; i < 700; ++i)
-	{
-		for (int j = 500; j < 502; j++)
-		{
-			gfx.PutPixel(i, j, 255, 0, 0);
-		}
-	}
-
-	
-
-	if (!touch)
-	{
-
-		bool xt;
-		bool yt;
-
-		for (int j = 0; j < n; j++)
-		{
-			// Tikrinama ar trikampio pirma koordinatė su kažkuom sutampa
-			for (int jj = 0; jj < array_s_triag; jj++)
-			{
-				for (int jjj = 0; jjj < array_s_ractang; jjj++)
-				{
-					xt = ractang[j].area[jjj][0] == triang.area[jj][0];
-					yt = ractang[j].area[jjj][1] == triang.area[jj][1];
-					touch = touch || (xt && yt);
-				}
-
-			}
-
-		}
-
-		/*
-		for (int j = 0; j < n; j++)
-		{
-			x_t = triang.x_in - (triang.size/2) > ractang[j].x_in && triang.x_in + (triang.size / 2) < ractang[j].x_in + ractang[j].size;
-			y_t = triang.y_in < ractang[j].y_in && triang.y_in > ractang[j].y_in - ractang[j].size;
-			touch = touch || (x_t && y_t);
-		}*/
-
-
-
 		triang.draw_triang(gfx);
-
-
-		if (triang.x_in < 695) {
-			if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-			{
-				triang.x_in += 5;
-			}
-		}
-
-		if (triang.x_in > 100) {
-			if (wnd.kbd.KeyIsPressed(VK_LEFT))
-			{
-				triang.x_in -= 5;
-			}
-		}
-
-
 	}
 
-
-
-
-	if (wnd.kbd.KeyIsPressed('R'))
-	{
-		touch = false;
-	}
-
-
-
-
-
-
-
-
-
+	Surroundings(gfx);
 }

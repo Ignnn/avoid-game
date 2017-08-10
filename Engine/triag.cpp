@@ -51,9 +51,6 @@ void triag::draw_triang(Graphics & gfx)
 
 void triag::Update(Keyboard& kbd)
 {
-
-	if (!touched)
-	{
 		if (x_in < 695) {
 			if (kbd.KeyIsPressed(VK_RIGHT))
 			{
@@ -67,8 +64,14 @@ void triag::Update(Keyboard& kbd)
 				x_in -= 5;
 			}
 		}
-	}
+}
 
+void triag::Restart(Keyboard & kbd)
+{
+	if (kbd.KeyIsPressed('R'))
+	{
+		touched = false;
+	}
 }
 
 
