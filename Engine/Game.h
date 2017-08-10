@@ -46,13 +46,7 @@ private:
 	/*  User Variables              */
 	/********************************/
 
-	/*std::random_device rd;
-	std::mt19937 rng;
-	std::uniform_int_distribution<int> xDist;
-	std::uniform_int_distribution<int> yDist;*/
-
-	
-	static const int n = 20;
+	static const int n = 6;
 	float ii[n];
 	rect ractang[n];
 	triag triang;

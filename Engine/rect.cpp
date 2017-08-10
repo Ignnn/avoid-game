@@ -90,21 +90,21 @@ void rect::Update()
 void rect::Collision(triag& triang)
 {
 
-int array_s_ractang;
-int array_s_triag;
-int xt;
-int yt;
+	int array_s_ractang;
+	int array_s_triag;
+	int xt;
+	int yt;
 
-array_s_ractang = sizeof(area) / sizeof(*area);
-array_s_triag = sizeof(triang.area) / sizeof(*triang.area);
+	array_s_ractang = sizeof(area) / sizeof(*area);
+	array_s_triag = sizeof(triang.area) / sizeof(*triang.area);
 
-for (int jj = 0; jj < array_s_triag; jj++)
-{
-for (int jjj = 0; jjj < array_s_ractang; jjj++)
-{
-xt = area[jjj][0] == triang.area[jj][0];
-yt = area[jjj][1] == triang.area[jj][1];
-triang.touched = triang.touched || (xt && yt);
-}
-}
+	for (int jj = 0; jj < array_s_triag; jj++)
+	{
+		for (int jjj = 0; jjj < array_s_ractang; jjj++)
+		{
+			xt = area[jjj][0] == triang.area[jj][0];
+			yt = area[jjj][1] == triang.area[jj][1];
+			triang.SetTouched(triang.GetTouched() || (xt && yt));
+		}
+	}
 }

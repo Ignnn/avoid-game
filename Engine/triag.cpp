@@ -77,6 +77,23 @@ void triag::Restart(Keyboard & kbd)
 
 
 
+bool triag::GetTouched() const
+{
+	return touched;
+}
+
+void triag::SetTouched(bool x)
+{
+	touched = x;
+}
+
+
+
+
+
+
+
+
 
 
 

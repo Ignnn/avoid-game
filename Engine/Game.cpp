@@ -24,84 +24,84 @@
 #include <cmath>
 #include <random>
 #include "Surroundings.h"
-
+#include "triag.h"
 Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd)
-{
-
-	for (int j = 0; j < n; j++)
 	{
-		std::random_device rd;
-		std::mt19937 rng(rd());
-		std::uniform_int_distribution<int> xDist(50, 750);
-
-		ractang[j].center_x = ractang[j].size / 2;
-		ractang[j].center_y = ractang[j].size / 2;
-		ractang[j].y_in = 50;
-		ractang[j].x_in = xDist(rng);
-		std::uniform_int_distribution<int> c1(50, 255);
-		std::uniform_int_distribution<int> c2(50, 255);
-		std::uniform_int_distribution<int> c3(50, 255);
-		ractang[j].color[0] = c1(rng);
-		ractang[j].color[1] = c2(rng);
-		ractang[j].color[2] = c3(rng);
-		std::uniform_int_distribution<int> sp(2, 4);
-		ractang[j].speedcoef = sp(rng);
-
-	}
-	start = false;
-}
-
-void Game::Go()
-{
-	gfx.BeginFrame();
-	UpdateModel();
-	ComposeFrame();
-	gfx.EndFrame();
-}
-
-void Game::UpdateModel()
-{
-
-	if (start) {
 
 		for (int j = 0; j < n; j++)
 		{
-			ractang[j].RectExist();
-			ractang[j].Update();
+			std::random_device rd;
+			std::mt19937 rng(rd());
+			std::uniform_int_distribution<int> xDist(50, 750);
+
+			ractang[j].center_x = ractang[j].size / 2;
+			ractang[j].center_y = ractang[j].size / 2;
+			ractang[j].y_in = 50;
+			ractang[j].x_in = xDist(rng);
+			std::uniform_int_distribution<int> c1(50, 255);
+			std::uniform_int_distribution<int> c2(50, 255);
+			std::uniform_int_distribution<int> c3(50, 255);
+			ractang[j].color[0] = c1(rng);
+			ractang[j].color[1] = c2(rng);
+			ractang[j].color[2] = c3(rng);
+			std::uniform_int_distribution<int> sp(2, 4);
+			ractang[j].speedcoef = sp(rng);
+
 		}
 
-		if (!triang.touched)
-		{
+start = false;
+	}
+
+	void Game::Go()
+	{
+		gfx.BeginFrame();
+		UpdateModel();
+		ComposeFrame();
+		gfx.EndFrame();
+	}
+
+	void Game::UpdateModel()
+	{
+
+		if (start) {
+
 			for (int j = 0; j < n; j++)
 			{
-				ractang[j].Collision(triang);
+				ractang[j].RectExist();
+				ractang[j].Update();
 			}
-			triang.Update(wnd.kbd);
+
+			if (!triang.GetTouched())
+			{
+				for (int j = 0; j < n; j++)
+				{
+					ractang[j].Collision(triang);
+				}
+				triang.Update(wnd.kbd);
+			}
+
+			// Atstatomas trikampis, jei paspaudžiama "R"
+			triang.Restart(wnd.kbd);
 		}
 
-		// Atstatomas trikampis, jei paspaudžiama "R"
-		triang.Restart(wnd.kbd);
+		// Svarbu praleisti pirmąją iteraciją, nes pirmiausia turėtų būti nupiešiamos figūros (piešimo metu fiksuojamos pirmosios koordinatės),
+		start = true;
 	}
 
-	// Svarbu praleisti pirmąją iteraciją, nes pirmiausia turėtų būti nupiešiamos figūros (piešimo metu fiksuojamos pirmosios koordinatės),
-	start = true;
-}
-
-void Game::ComposeFrame()
-{
-	for (int j = 0; j < n; j++)
+	void Game::ComposeFrame()
 	{
-		ractang[j].draw_rect(gfx);
+		for (int j = 0; j < n; j++)
+		{
+			ractang[j].draw_rect(gfx);
+		}
+
+		if (!triang.GetTouched())
+		{
+			triang.draw_triang(gfx);
+		}
+
+		Surroundings(gfx);
 	}
-
-
-	if (!triang.touched)
-	{
-		triang.draw_triang(gfx);
-	}
-
-	Surroundings(gfx);
-}

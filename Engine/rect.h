@@ -23,6 +23,6 @@ public:
 	bool exist = true;
 	int color[3] = { 0,255,255 };
 	int speedcoef = 5;
-	bool touched = false;
+	
 	
 };
