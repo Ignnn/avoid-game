@@ -8,16 +8,24 @@ class triag
 public:
 
 	void draw_triang(Graphics& gfx);
+	
+	//Control functions
 	void Update(Keyboard& kbd);
 	void Restart(Keyboard& kbd);
-	
+	//
+
+
+	// Setter and getter
 	bool GetTouched() const ;
 	void SetTouched(bool x);
+	//
 
-	static const int size = 15;
-	int area[size*size][2];
+	typedef int (*int_arrays)[2];
+	int_arrays GetArea(){return area;};
 
 private:
+	static const int size = 15;
+	int area[size*size][2];
 	double y_in = 500 - size;
 	double x_in = 400 - (size / 2);
 	double angle = 0;

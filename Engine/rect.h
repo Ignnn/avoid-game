@@ -6,12 +6,20 @@ class rect
 {
 public:
 
+	// Constructor
+	
+
+    //
+
 	void rect::Update();
 	void rect::RectExist();
 	void rect::Collision(triag& triang);
 
 	void draw_rect(Graphics& gfx);
 	
+
+
+
 	static const int size = 35;
 	double x_in = 300;
 	double y_in = 300;
