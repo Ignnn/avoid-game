@@ -25,31 +25,22 @@
 #include <random>
 #include "Surroundings.h"
 #include "triag.h"
+#include "rect.h"
 Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
-	gfx(wnd)
-	{
+	gfx(wnd),
+	rng(rd()),
+	sp(2, 4),
+	xDist(50,750),
+	c1(50, 255),
+	c2(50, 255),
+	c3(50, 255)
 
+	{
 		for (int j = 0; j < n; j++)
 		{
-			std::random_device rd;
-			std::mt19937 rng(rd());
-			std::uniform_int_distribution<int> xDist(50, 750);
-
-			ractang[j].center_x = ractang[j].size / 2;
-			ractang[j].center_y = ractang[j].size / 2;
-			ractang[j].y_in = 50;
-			ractang[j].x_in = xDist(rng);
-			std::uniform_int_distribution<int> c1(50, 255);
-			std::uniform_int_distribution<int> c2(50, 255);
-			std::uniform_int_distribution<int> c3(50, 255);
-			ractang[j].color[0] = c1(rng);
-			ractang[j].color[1] = c2(rng);
-			ractang[j].color[2] = c3(rng);
-			std::uniform_int_distribution<int> sp(2, 4);
-			ractang[j].speedcoef = sp(rng);
-
+			ractang[j].Init(xDist(rng), sp(rng),c1(rng),c2(rng),c3(rng));
 		}
 
 start = false;
@@ -65,7 +56,6 @@ start = false;
 
 	void Game::UpdateModel()
 	{
-
 		if (start) {
 
 			for (int j = 0; j < n; j++)

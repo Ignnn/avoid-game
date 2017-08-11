@@ -56,4 +56,12 @@ private:
 	int array_s_ractang;
 	int array_s_triag;
 	bool start;
+
+	std::random_device rd;
+	std::mt19937 rng;
+	std::uniform_int_distribution<int> xDist;
+	std::uniform_int_distribution<int> sp;
+	std::uniform_int_distribution<int> c1;
+	std::uniform_int_distribution<int> c2;
+	std::uniform_int_distribution<int> c3;
 };

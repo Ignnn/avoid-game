@@ -6,31 +6,23 @@ class rect
 {
 public:
 
-	// Constructor
-	
-
-    //
-
-	void rect::Update();
-	void rect::RectExist();
-	void rect::Collision(triag& triang);
-
+// Functions
+	void Init(double x, int speedcoef_in, int c1, int c2, int c3);
+	void Update();
+	void RectExist();
+	void Collision(triag& triang);
 	void draw_rect(Graphics& gfx);
 	
 
-
-
-	static const int size = 35;
-	double x_in = 300;
-	double y_in = 300;
+private:	
+	int speedcoef = 5;
+	double x_in;
 	double angle = 0;
+	bool exist = true;
+	static const int size = 35;
+	int area[size*size][2];
+	double y_in = 50;
 	double center_x = size / 2;
 	double center_y = size / 2;
-	int area[size*size][2];
-	bool kryptis = true;
-	bool exist = true;
-	int color[3] = { 0,255,255 };
-	int speedcoef = 5;
-	
-	
+	int color[3];
 };

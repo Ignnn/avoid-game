@@ -108,3 +108,11 @@ void rect::Collision(triag& triang)
 		}
 	}
 }
+
+void rect::Init(double x, int speedcoef_in, int c1, int c2, int c3) {
+	x_in = x;
+	speedcoef = speedcoef_in;
+	color[0] = c1;
+	color[1] = c2;
+	color[2] = c3;
+}
