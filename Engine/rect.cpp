@@ -1,4 +1,4 @@
-
+﻿
 #include "Graphics.h"
 #include <cmath>
 #include "rect.h"
@@ -14,9 +14,9 @@ void rect::draw_rect(Graphics& gfx)
 	double y;
 	int index = 0;
 
-	for (int j = 0; j <= (size)-1; ++j)
+	for (int j = 0; j <= size-1; ++j)
 	{
-		for (int i = 0; i <= (size)-1; ++i)
+		for (int i = 0; i <= size-1; ++i)
 		{
 			x = i + x_in;
 			y = j + y_in;
@@ -30,12 +30,31 @@ void rect::draw_rect(Graphics& gfx)
 			x = (sin(c_poss + angle) * radius) + x_in + center_x;
 			y = (cos(c_poss + angle) * radius) + y_in + center_y;
 
-			area[index][0] = x;
-			area[index][1] = y;
-
-			index++;
-
 			gfx.PutPixel(x, y, color[0], color[1], color[2]);
+
+			/*area[index][0] = x;
+			area[index][1] = y;
+			index++;*/
+
+			
+			// Šiomis IF sąlygomis užtikrinama, kad būtų fiksuojamos tik kvadrato kraštinių taškų koordinatės.
+
+			if ((j == 0) || (j == size-1))
+			{
+			// Fiksuojamos visos koordinatės (viršus ir apačia)
+				area[index][0] = x;
+				area[index][1] = y;
+				index++;
+			}
+			else if ((i == 0) || (i == size-1))
+			{
+			// Fiksuojamos 2 koordinatės (šoniniai taškai)
+				area[index][0] = x;
+				area[index][1] = y;
+				index++;
+			}
+
+			
 		}
 	}
 
@@ -94,7 +113,8 @@ void rect::Collision(triag& triang)
 	int array_s_triag;
 	int xt;
 	int yt;
-
+	float distance;
+	
 	array_s_ractang = sizeof(area) / sizeof(*area);
 	array_s_triag = sizeof(triang.GetArea()) / sizeof(*triang.GetArea());
 
@@ -102,9 +122,18 @@ void rect::Collision(triag& triang)
 	{
 		for (int jjj = 0; jjj < array_s_ractang; jjj++)
 		{
-			xt = area[jjj][0] == triang.GetArea()[jj][0];
-			yt = area[jjj][1] == triang.GetArea()[jj][1];
-			triang.SetTouched(triang.GetTouched() || (xt && yt));
+			xt = (area[jjj][0] == triang.GetArea()[jj][0]);
+			yt = (area[jjj][1] == triang.GetArea()[jj][1]);
+
+			distance = sqrt(((area[jjj][0] - triang.GetArea()[jj][0])* (area[jjj][0] - triang.GetArea()[jj][0])) +
+				((area[jjj][1] - triang.GetArea()[jj][1])* (area[jjj][1] - triang.GetArea()[jj][1]))
+			);
+
+
+		
+
+//			triang.SetTouched(triang.GetTouched() || (xt && yt));
+			triang.SetTouched(triang.GetTouched() || (distance < 3));
 		}
 	}
 }

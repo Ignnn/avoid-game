@@ -12,17 +12,15 @@ public:
 	void RectExist();
 	void Collision(triag& triang);
 	void draw_rect(Graphics& gfx);
-	
-
 private:	
 	int speedcoef = 5;
 	double x_in;
 	double angle = 0;
 	bool exist = true;
 	static const int size = 35;
-	int area[size*size][2];
-	double y_in = 50;
-	double center_x = size / 2;
-	double center_y = size / 2;
+	float area[(size - 1) * 4][2] = { 0 }; // Fiksuojami tik kvadrato šoniniai taškai. Svarbu inicijuoti kaip 0.
+	float y_in = 50;
+	float center_x = size / 2;
+	float center_y = size / 2;
 	int color[3];
 };

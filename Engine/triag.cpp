@@ -1,4 +1,4 @@
-#include "triag.h"
+﻿#include "triag.h"
 #include "rect.h"
 #include <cmath>
 
@@ -19,7 +19,7 @@ void triag::draw_triang(Graphics & gfx)
 	{
 
 		j = i;
-		y = i + y_in; // nupie�iama pirmoji vir�?n?s koordinat?
+		y = i + y_in; // nupiešiama pirmoji virš?n?s koordinat?
 
 		for (int jj = -1 * j; jj <= j; jj++)
 		{
@@ -38,13 +38,32 @@ void triag::draw_triang(Graphics & gfx)
 			xp = (cos(c_poss + angle) * radius) + x_in + center_x + size;
 			yp = (sin(c_poss + angle) * radius) + y_in + center_y;
 
-			area[index][0] = xp;
-			area[index][1] = yp;
-
-			index++;
 
 			gfx.PutPixel(xp, yp, color[0], color[1], color[2]);
+			/*
+		area[index][0] = xp;
+			area[index][1] = yp;
+			
+			index++;
+			*/
 
+			// Šiomis IF sąlygomis užtikrinama, kad būtų fiksuojamos tik kvadrato kraštinių taškų koordinatės.
+		
+			if ((i == 0) || (i == size-1))
+			{
+				// Fiksuojamos visos koordinatės (viršus ir apačia)
+				area[index][0] = xp;
+				area[index][1] = yp;
+				index++;
+			}
+			else if ((jj == -1 * i) || (jj == 1 * i))
+			{
+				// Fiksuojamos 2 koordinatės (šoniniai taškai)
+				area[index][0] = xp;
+				area[index][1] = yp;
+				index++;
+			}
+				
 		}
 	}
 }
