@@ -46,7 +46,7 @@ private:
 	/*  User Variables              */
 	/********************************/
 
-	static const int n = 2;
+	static const int n = 10;
 	float ii[n];
 	rect ractang[n];
 	triag triang;

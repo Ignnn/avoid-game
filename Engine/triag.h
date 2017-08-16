@@ -26,7 +26,7 @@ public:
 private:
 	static const int size = 15;
 	//int area[size*size][2] = { 0 };
-	int area[(size - 1) * 3][2] = { 0 };
+	int area[1+ size-2+size-2-1+size*2][2] = { 0 };
 	double y_in = 500 - size;
 	double x_in = 400 - (size / 2);
 	double angle = 0;

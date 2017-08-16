@@ -18,7 +18,10 @@ void triag::draw_triang(Graphics & gfx)
 	for (int i = 0; i < size; i++)
 	{
 
-		j = i;
+		// i tai aukstis
+	
+
+		j = i; 
 		y = i + y_in; // nupiešiama pirmoji virš?n?s koordinat?
 
 		for (int jj = -1 * j; jj <= j; jj++)
@@ -40,13 +43,13 @@ void triag::draw_triang(Graphics & gfx)
 
 
 			gfx.PutPixel(xp, yp, color[0], color[1], color[2]);
-			/*
+		/*
 		area[index][0] = xp;
 			area[index][1] = yp;
 			
 			index++;
-			*/
-
+		*/
+			
 			// Šiomis IF sąlygomis užtikrinama, kad būtų fiksuojamos tik kvadrato kraštinių taškų koordinatės.
 		
 			if ((i == 0) || (i == size-1))
@@ -56,14 +59,14 @@ void triag::draw_triang(Graphics & gfx)
 				area[index][1] = yp;
 				index++;
 			}
-			else if ((jj == -1 * i) || (jj == 1 * i))
+			else if ((jj == -1 * j) || (jj == 1 * j))
 			{
 				// Fiksuojamos 2 koordinatės (šoniniai taškai)
 				area[index][0] = xp;
 				area[index][1] = yp;
 				index++;
 			}
-				
+			
 		}
 	}
 }

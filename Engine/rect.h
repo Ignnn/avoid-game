@@ -17,7 +17,7 @@ private:
 	double x_in;
 	double angle = 0;
 	bool exist = true;
-	static const int size = 35;
+	static const int size = 20;
 	float area[(size - 1) * 4][2] = { 0 }; // Fiksuojami tik kvadrato šoniniai taškai. Svarbu inicijuoti kaip 0.
 	float y_in = 50;
 	float center_x = size / 2;
