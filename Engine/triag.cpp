@@ -34,9 +34,6 @@ void triag::draw_triang(Graphics & gfx)
 				((y_in + center_y - y) * 	(y_in + center_y - y))
 			);
 
-
-
-			//c_poss = atan2((center_x + x_in) - x, (center_y + y_in) - y); //originalus
 			c_poss = atan2(y - (center_y + y_in), x - (center_x + x_in));
 			xp = (cos(c_poss + angle) * radius) + x_in + center_x + size;
 			yp = (sin(c_poss + angle) * radius) + y_in + center_y;
@@ -67,6 +64,22 @@ void triag::draw_triang(Graphics & gfx)
 				index++;
 			}
 			
+			/* AKIŲ PIEŠIMAS*/
+
+			if ((i == size / 3) || (i == size / 2))
+			{
+				if (((jj >= -size / 2) && (jj < 0)) || (jj <= size / 2) && (jj > 0))
+				{
+					gfx.PutPixel(xp, yp, 255, 0, 0);
+				}	
+			}
+			else if ((i > (size / 4)) && (i < size / 2))
+			{
+				if ((jj == (-1*size / 2)) || (jj == (size / 2)) || (jj == 0))
+				{
+					gfx.PutPixel(xp, yp, 255, 0, 0);
+				}
+			}			
 		}
 	}
 }
